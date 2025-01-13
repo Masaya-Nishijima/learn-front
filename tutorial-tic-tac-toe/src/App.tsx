@@ -59,9 +59,9 @@ function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean, squares: Array<
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [moveDirectionReverse, setMoveDirectionReverse] = useState(false);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
-
 
   function handlePlay(nextSquares: Array<SquareValue>) {
 
@@ -99,7 +99,12 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <button onClick={()=> {setMoveDirectionReverse(!moveDirectionReverse)}}>reverse</button>
+        <ol
+          className={moveDirectionReverse ? "reverse" : ""}
+        >
+          {moves}
+        </ol>
       </div>
     </div>
   );

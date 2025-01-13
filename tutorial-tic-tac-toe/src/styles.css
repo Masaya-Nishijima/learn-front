@@ -87,4 +87,12 @@ body {
 
 .game-info {
   margin-left: 20px;
+
+  ol {
+    display: flex;
+    flex-direction: column;
+    &.reverse {
+      flex-direction: column-reverse;
+    }
+  }
 }
