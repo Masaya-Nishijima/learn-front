@@ -2,10 +2,10 @@ import { MouseEventHandler, useState } from "react";
 
 type SquareValue = "X" | "O" | null;
 
-function Square({ value, onSquareClick }: { value: SquareValue, onSquareClick: MouseEventHandler<HTMLButtonElement> }) {
+function Square({ value, highlight, onSquareClick }: { value: SquareValue, highlight: boolean, onSquareClick: MouseEventHandler<HTMLButtonElement> }) {
   return (
     <button
-      className="square"
+      className={highlight ? "square bk-yellow" : "square"}
       onClick={onSquareClick}
     >
       {value}
@@ -13,7 +13,9 @@ function Square({ value, onSquareClick }: { value: SquareValue, onSquareClick: M
   );
 }
 
-function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean, squares: Array<SquareValue>, onPlay: (nextSquares: Array<SquareValue>) => void  }) {
+function Board({ xIsNext, squares, currentMove, lastPointedSquareIndex, onPlay }: { xIsNext: boolean, squares: Array<SquareValue>, currentMove: number, lastPointedSquareIndex: number | null, onPlay: (nextSquares: Array<SquareValue>) => void  }) {
+  const calcLastSquareTwoDimensionalIndex = lastPointedSquareIndex || lastPointedSquareIndex === 0 ? [Math.floor(lastPointedSquareIndex / 3), lastPointedSquareIndex % 3] : [null, null];
+
   function handleClick(i: number) {
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -31,7 +33,11 @@ function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean, squares: Array<
   let status;
   if (winner) {
     status = "Winner: " + winner;
-  } else {
+  } else if(currentMove == 9) {
+    // 勝敗が決まらず盤面に置ける場所がない状況を引き分けとする。
+    // Memo(検討)↑の状況にしかならない盤面で、事前に引き分け判定をすることもありうる?
+    status = "Draw";
+  }else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
@@ -45,7 +51,7 @@ function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean, squares: Array<
               {
                 [0, 1, 2].map((col) => {
                   const squareIndex = row * 3 + col
-                  return<Square value={squares[squareIndex]} onSquareClick={() => handleClick(squareIndex)} />
+                  return<Square value={squares[squareIndex]} onSquareClick={() => handleClick(squareIndex)} highlight={ !!winner && row === calcLastSquareTwoDimensionalIndex[0] && col === calcLastSquareTwoDimensionalIndex[1] } />
                 })
               }
             </div>
@@ -74,6 +80,17 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  // 指定のムーブでどこに指したか判定する関数
+  function pointedSquareIndex(move: number): number | null {
+    if (move === 0) {
+      return null;
+    } else {
+      return history[move].map((square, index) => {
+        return history[move - 1][index] !== square;
+      }).indexOf(true);
+    }
+  }
+
   const moves = history.map((_, move) => {
     let description;
 
@@ -96,7 +113,7 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={currentSquares} currentMove={currentMove} lastPointedSquareIndex={pointedSquareIndex(currentMove)} onPlay={handlePlay} />
       </div>
       <div className="game-info">
         <button onClick={()=> {setMoveDirectionReverse(!moveDirectionReverse)}}>reverse</button>
@@ -110,7 +127,7 @@ export default function Game() {
   );
 }
 
-function calculateWinner(squares: Array<"X"| "O"| null>) {
+function calculateWinner(squares: Array<SquareValue>): SquareValue {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

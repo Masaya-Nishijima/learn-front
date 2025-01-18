@@ -69,6 +69,10 @@ body {
   padding: 0;
   text-align: center;
   width: 34px;
+
+  &.bk-yellow {
+    background-color: yellow;
+  }
 }
 
 .board-row:after {
