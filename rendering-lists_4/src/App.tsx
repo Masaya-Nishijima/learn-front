@@ -9,11 +9,16 @@ const poem = {
 export default function Poem() {
   return (
     <article>
-      {poem.lines.map((line, index) =>
-        <p key={index}>
-          {line}
-        </p>
-      )}
+      {poem.lines.map((line, index) =>{
+        return (
+          <>
+            <p key={index}>
+              {line}
+            </p>
+            {(poem.lines.length !== index + 1) && <hr />}
+          </>
+        )
+      })}
     </article>
   );
 }
