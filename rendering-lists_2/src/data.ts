@@ -1,4 +1,10 @@
-export const recipes = [{
+export type Recipe = {
+  id: string,
+  name: string,
+  ingredients: Array<string>
+}
+
+export const recipes: Array<Recipe> = [{
   id: 'greek-salad',
   name: 'Greek Salad',
   ingredients: ['tomatoes', 'cucumber', 'onion', 'olives', 'feta']
