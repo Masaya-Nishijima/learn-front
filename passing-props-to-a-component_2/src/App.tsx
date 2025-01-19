@@ -4,7 +4,7 @@ function Avatar({ person, size }) {
   return (
     <img
       className="avatar"
-      src={getImageUrl(person, 'b')}
+      src={size < 90 ? getImageUrl(person, 's'): getImageUrl(person, 'b')}
       alt={person.name}
       width={size}
       height={size}
