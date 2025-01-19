@@ -1,12 +1,12 @@
 export default function StoryTray({ stories }) {
-  stories.push({
+  const storiesAddCreate = stories.concat({
     id: 'create',
     label: 'Create Story'
   });
 
   return (
     <ul>
-      {stories.map(story => (
+      {storiesAddCreate.map(story => (
         <li key={story.id}>
           {story.label}
         </li>
