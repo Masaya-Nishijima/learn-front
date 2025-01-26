@@ -2,8 +2,14 @@ import { useState } from 'react';
 import AddTodo from './AddTodo';
 import TaskList from './TaskList';
 
+type TTodo = {
+  id: number,
+  title: string,
+  done: boolean
+}
+
 let nextId = 3;
-const initialTodos = [
+const initialTodos: TTodo[] = [
   { id: 0, title: 'Buy milk', done: true },
   { id: 1, title: 'Eat tacos', done: false },
   { id: 2, title: 'Brew tea', done: false },
@@ -14,27 +20,31 @@ export default function TaskApp() {
     initialTodos
   );
 
-  function handleAddTodo(title) {
-    todos.push({
-      id: nextId++,
-      title: title,
-      done: false
-    });
+  function handleAddTodo(title: string) {
+    setTodos(
+      [
+        ...todos,
+        {
+          id: nextId++,
+          title: title,
+          done: false
+        }
+      ]
+    )
   }
 
-  function handleChangeTodo(nextTodo) {
-    const todo = todos.find(t =>
-      t.id === nextTodo.id
-    );
-    todo.title = nextTodo.title;
-    todo.done = nextTodo.done;
+  function handleChangeTodo(changeTodo: TTodo) {
+    setTodos(todos.map((todo) => {
+      if (todo.id !== changeTodo.id) return todo;
+
+      return changeTodo;
+    }))
   }
 
-  function handleDeleteTodo(todoId) {
-    const index = todos.findIndex(t =>
-      t.id === todoId
-    );
-    todos.splice(index, 1);
+  function handleDeleteTodo(todoId: number) {
+    setTodos(todos.filter((todo) => {
+      return todo.id !== todoId
+    }))
   }
 
   return (
