@@ -1,0 +1,37 @@
+{
+  "hash": "897b2939",
+  "configHash": "7b3a8726",
+  "lockfileHash": "974027a3",
+  "browserHash": "345470db",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "a7b8022a",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "f5fc9e06",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "369e82cd",
+      "needsInterop": true
+    },
+    "use-immer": {
+      "src": "../../node_modules/use-immer/dist/use-immer.module.js",
+      "file": "use-immer.js",
+      "fileHash": "4d7d26db",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-UTEJFLXC": {
+      "file": "chunk-UTEJFLXC.js"
+    }
+  }
+}
