@@ -11,31 +11,38 @@ const initialTodos = [
 ];
 
 export default function TaskApp() {
-  const [todos, setTodos] = useState(
+  const [todos, updateTodos] = useImmer(
     initialTodos
   );
 
   function handleAddTodo(title) {
-    todos.push({
-      id: nextId++,
-      title: title,
-      done: false
-    });
+    updateTodos((draftTodos) => {
+      draftTodos.push({
+        id: nextId++,
+        title: title,
+        done: false
+      })
+    }
+    )
   }
 
   function handleChangeTodo(nextTodo) {
-    const todo = todos.find(t =>
-      t.id === nextTodo.id
-    );
-    todo.title = nextTodo.title;
-    todo.done = nextTodo.done;
+    updateTodos((draftTodos) => {
+      const todo = draftTodos.find(t =>
+        t.id === nextTodo.id
+      );
+      todo.title = nextTodo.title;
+      todo.done = nextTodo.done;
+    })
   }
 
   function handleDeleteTodo(todoId) {
-    const index = todos.findIndex(t =>
-      t.id === todoId
-    );
-    todos.splice(index, 1);
+    updateTodos((draftTodos) => {
+      const index = draftTodos.findIndex(t =>
+        t.id === todoId
+      );
+      draftTodos.splice(index, 1);
+    })
   }
 
   return (
