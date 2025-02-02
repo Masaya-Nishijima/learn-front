@@ -4,15 +4,10 @@ export default function Form() {
   const [showForm, setShowForm] = useState(true);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (!showForm) {
-      sendMessage(message);
-    }
-  }, [showForm, message]);
-
   function handleSubmit(e) {
     e.preventDefault();
     setShowForm(false);
+    sendMessage(message);
   }
 
   if (!showForm) {
