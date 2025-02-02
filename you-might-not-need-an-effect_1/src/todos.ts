@@ -1,6 +1,10 @@
 let nextId = 0;
-
-export function createTodo(text, completed = false) {
+type TTodo = {
+  id: number,
+  text: string,
+  completed: boolean
+}
+export function createTodo(text: string, completed = false) {
   return {
     id: nextId++,
     text,
@@ -8,7 +12,7 @@ export function createTodo(text, completed = false) {
   };
 }
 
-export const initialTodos = [
+export const initialTodos: Array<TTodo> = [
   createTodo('Get apples', true),
   createTodo('Get oranges', true),
   createTodo('Get carrots'),
