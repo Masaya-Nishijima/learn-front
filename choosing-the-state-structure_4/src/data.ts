@@ -1,4 +1,4 @@
-export const letters = [{
+export const letters: Array<TLetter> = [{
   id: 0,
   subject: 'Ready for adventure?',
   isStarred: true,
@@ -11,3 +11,9 @@ export const letters = [{
   subject: 'Festival Begins in Just SEVEN Days!',
   isStarred: false,
 }];
+
+export type TLetter = {
+  id: number,
+  subject: string,
+  isStarred: boolean
+}

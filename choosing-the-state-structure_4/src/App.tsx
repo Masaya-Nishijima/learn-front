@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { letters } from './data';
+import { letters, TLetter } from './data';
 import Letter from './Letter';
 
 export default function MailClient() {
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedIds, setSelectedIds] = useState<Array<number>>([]);
 
   // TODO: allow multiple selection
-  const selectedCount = 1;
+  const selectedCount = selectedIds.length;
 
-  function handleToggle(toggledId) {
+  function handleToggle(toggledId: number) {
     // TODO: allow multiple selection
-    setSelectedId(toggledId);
+    if (selectedIds && selectedIds.includes(toggledId)) {
+      setSelectedIds(selectedIds.filter((id) => {
+        return id !== toggledId;
+      }))
+    } else {
+      setSelectedIds(selectedIds.concat(toggledId))
+    }
   }
 
   return (
@@ -23,7 +29,7 @@ export default function MailClient() {
             letter={letter}
             isSelected={
               // TODO: allow multiple selection
-              letter.id === selectedId
+              selectedIds.includes(letter.id)
             }
             onToggle={handleToggle}
           />
