@@ -15,16 +15,16 @@ export default function App() {
   if (reverse) {
     return (
       <>
-        <Field label="Last name" />
-        <Field label="First name" />
+        <Field label="Last name" key="lastName" />
+        <Field label="First name" key="firstName" />
         {checkbox}
       </>
     );
   } else {
     return (
       <>
-        <Field label="First name" />
-        <Field label="Last name" />
+        <Field label="First name" key="firstName" />
+        <Field label="Last name" key="lastName" />
         {checkbox}
       </>
     );
