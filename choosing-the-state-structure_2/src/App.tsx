@@ -3,19 +3,24 @@ import AddItem from './AddItem';
 import PackingList from './PackingList';
 
 let nextId = 3;
-const initialItems = [
+const initialItems: Array<TItem> = [
   { id: 0, title: 'Warm socks', packed: true },
   { id: 1, title: 'Travel journal', packed: false },
   { id: 2, title: 'Watercolors', packed: false },
 ];
 
+type TItem = {
+  id: number,
+  title: string,
+  packed: boolean
+}
+
 export default function TravelPlan() {
   const [items, setItems] = useState(initialItems);
-  const [total, setTotal] = useState(3);
-  const [packed, setPacked] = useState(1);
+  const total = items.length;
+  const packed = items.filter(item => item.packed).length
 
-  function handleAddItem(title) {
-    setTotal(total + 1);
+  function handleAddItem(title: string) {
     setItems([
       ...items,
       {
@@ -26,12 +31,7 @@ export default function TravelPlan() {
     ]);
   }
 
-  function handleChangeItem(nextItem) {
-    if (nextItem.packed) {
-      setPacked(packed + 1);
-    } else {
-      setPacked(packed - 1);
-    }
+  function handleChangeItem(nextItem: TItem) {
     setItems(items.map(item => {
       if (item.id === nextItem.id) {
         return nextItem;
@@ -41,8 +41,7 @@ export default function TravelPlan() {
     }));
   }
 
-  function handleDeleteItem(itemId) {
-    setTotal(total - 1);
+  function handleDeleteItem(itemId: number) {
     setItems(
       items.filter(item => item.id !== itemId)
     );
