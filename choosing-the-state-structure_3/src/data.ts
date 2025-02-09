@@ -1,4 +1,10 @@
-export const initialLetters = [{
+export type TLetter = {
+  id: number,
+  subject: string,
+  isStarred: boolean
+}
+
+export const initialLetters: Array<TLetter> = [{
   id: 0,
   subject: 'Ready for adventure?',
   isStarred: true,

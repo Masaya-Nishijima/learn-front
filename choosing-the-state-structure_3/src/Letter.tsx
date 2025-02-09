@@ -1,8 +1,15 @@
+import { TLetter } from "./data";
+
 export default function Letter({
   letter,
   isHighlighted,
   onHover,
   onToggleStar,
+}: {
+  letter: TLetter,
+  isHighlighted: boolean,
+  onHover: (arg0: TLetter) => void,
+  onToggleStar: (arg0: TLetter) => void
 }) {
   return (
     <li
