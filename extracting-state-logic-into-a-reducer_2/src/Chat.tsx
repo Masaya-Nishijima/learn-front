@@ -14,7 +14,17 @@ export default function Chat({contact, message, dispatch}) {
         }}
       />
       <br />
-      <button>
+      <button
+        onClick={() => {
+          alert(
+            contact.email + ': ' + message
+          );
+          dispatch({
+            type: 'edited_message',
+            message: ''
+          })
+        }}
+      >
         Send to {contact.email}
       </button>
     </section>
