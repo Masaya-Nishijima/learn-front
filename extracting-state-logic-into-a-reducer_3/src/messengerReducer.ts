@@ -1,27 +1,50 @@
-export const initialState = {
+export type TState = {
+  selectedId: number,
+  messages: {
+    [x: number]: string
+  }
+}
+
+export const initialState: TState = {
   selectedId: 0,
-  message: 'Hello',
+  messages: {
+    0: 'Hello, Taylor', // Draft for contactId = 0
+    1: 'Hello, Alice', // Draft for contactId = 1
+  },
 };
 
-export function messengerReducer(state, action) {
+export type TAction = {
+  type: 'changed_selection' | 'edited_message' | 'sent_message',
+  contactId?: number,
+  message?: string
+}
+
+export function messengerReducer(state: TState, action: TAction): TState {
   switch (action.type) {
     case 'changed_selection': {
       return {
-        ...state,
-        selectedId: action.contactId,
-        message: '',
+        selectedId: action.contactId as number, // FIXME
+        messages: {
+          ...state.messages
+        }
       };
     }
     case 'edited_message': {
       return {
-        ...state,
-        message: action.message,
+        selectedId: state.selectedId,
+        messages: {
+          ...state.messages,
+          [state.selectedId]: action.message
+        } as { [x: number]: string } // FIXME
       };
     }
     case 'sent_message': {
       return {
-        ...state,
-        message: '',
+        selectedId: state.selectedId,
+        messages: {
+          ...state.messages,
+          [state.selectedId]: ''
+        }
       };
     }
     default: {
