@@ -35,7 +35,7 @@ export default function App() {
         </select>
       </label>
       <hr />
-      <ChatRoom options={options} />
+      <ChatRoom serverUrl={options.serverUrl} roomId={options.roomId} />
     </div>
   );
 }
