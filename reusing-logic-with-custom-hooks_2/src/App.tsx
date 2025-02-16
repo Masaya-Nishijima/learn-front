@@ -3,7 +3,7 @@ import { useCounter } from './useCounter.js';
 
 export default function Counter() {
   const [delay, setDelay] = useState(1000);
-  const count = useCounter();
+  const count = useCounter(delay);
   return (
     <>
       <label>
